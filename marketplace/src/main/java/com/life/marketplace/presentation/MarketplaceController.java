@@ -1,9 +1,7 @@
 package com.life.marketplace.presentation;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import com.life.marketplace.model.Products;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Date;
@@ -11,7 +9,7 @@ import java.sql.Date;
 
 @RestController()
 //@RequestMapping(value = "/api/v01")
-public class marketplaceController {
+public class MarketplaceController {
 
 
     @RequestMapping(value = "/products", method = RequestMethod.GET)
@@ -26,7 +24,6 @@ public class marketplaceController {
         product.setCondition("whack");
         product.setStatus("Not sold its broken what did you expect");
         product.setSeller("you :eyesemoji:");
-
 
         Gson gson = new Gson();
         return gson.toJson(product);
