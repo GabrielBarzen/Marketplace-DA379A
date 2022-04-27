@@ -1,0 +1,9 @@
+@import "global.css";
+
+table, th, td, tr {
+    border: 1px solid;
+}
+
+body {
+    
+}
