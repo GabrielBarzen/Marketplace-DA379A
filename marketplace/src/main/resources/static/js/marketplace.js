@@ -24,7 +24,7 @@ function addProductToProductTable(jsonObject) {
     for (let i = 0; i < productAttributes.length; i++) {
         htmlString += "<td>"+productAttributes[i]+"</td>"
     }
-    htmlString +="<td><input type=\"button\" value=\"buy\" onclick=\"addItemToCart("+productAttributes[0]+")\"></td>"
+    htmlString +="<td><input type=\"button\" value=\"add to cart\" onclick=\"addItemToCart("+productAttributes[0]+")\"></td>"
     htmlString += "</tr>" +
         "</tbody>";
 
@@ -46,18 +46,3 @@ function getProducts() {
 function addItemToCart(productID) {
     console.log("buying : " + productID);
 }
-/*
-Object { id: "01", price: 20000000, date: "nov. 7, 3899", type: "electronics", color: "green", condition: "whack", status: "Not sold its broken what did you expect", seller: "you :eyesemoji:", name: "macbook" }
-
-id: "01"
-name: "macbook"
-price: 20000000
-date: "nov. 7, 3899"
-type: "electronics"
-color: "green"
-condition: "whack"
-status: "Not sold its broken what did you expect"
-seller: "you :eyesemoji:"
-
-
- */
