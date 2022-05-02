@@ -41,9 +41,47 @@ CREATE OR REPLACE FUNCTION f_register_user(
     END;
     $$ LANGUAGE plpgsql;
 	
-CREATE OR REPLACE FUNCTION f_delete_user(uname VARCHAR)
-    RETURNS BOOLEAN AS $$
+
+CREATE OR REPLACE procedure p_delete_user(uname VARCHAR)
+    AS $$
     BEGIN
         DELETE FROM users WHERE uname = users.username;
     END;
     $$ LANGUAGE plpgsql;
+	
+
+create or replace procedure p_removeproduct(f_id uuid)
+    as
+    $$
+    begin
+        delete from products where f_id = products.id;
+    end;
+    $$
+
+language plpgsql;
+
+create or replace function f_searchType(
+    f_type varchar default null,
+    f_condition varchar default null,
+    f_pricemax double precision default 999999999,
+    f_pricemin double precision default 0)
+    returns setof products as
+    $$
+        begin
+            if f_pricemax != 999999 and f_pricemin != 0 and f_type is null and f_condition is null then
+                return query (select * from products where f_pricemax >= products.price and f_pricemin <= products.price and status = 'Not Sold');
+
+            elsif f_type is null and f_condition is not null then
+                return query (select * from products where f_condition = products.condition and f_pricemax >= products.price and f_pricemin <= products.price and status = 'Not Sold');
+
+            elsif f_condition is null and f_type is not null then
+                return query (select * from products where f_type = products.type and f_pricemax >= products.price and f_pricemin <= products.price and status = 'Not Sold');
+
+            else
+                return query (select * from products where f_type = products.type and f_condition = products.condition and f_pricemax >= products.price and f_pricemin <= products.price and status = 'Not Sold');
+
+            end if;
+        end;
+    $$
+
+language plpgsql;
