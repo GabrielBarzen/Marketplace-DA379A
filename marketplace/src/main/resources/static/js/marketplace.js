@@ -49,8 +49,6 @@ function addItemToCart(productID) {
 /*
 Object { id: "01", price: 20000000, date: "nov. 7, 3899", type: "electronics", color: "green", condition: "whack", status: "Not sold its broken what did you expect", seller: "you :eyesemoji:", name: "macbook" }
 
-
-
 id: "01"
 name: "macbook"
 price: 20000000
