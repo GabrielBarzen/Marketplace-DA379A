@@ -85,3 +85,17 @@ create or replace function f_searchType(
     $$
 
 language plpgsql;
+
+
+
+
+--RETURNS EMPTY RESULT SET IF NO LOGIN
+CREATE OR REPLACE FUNCTION f_login_user(uname VARCHAR, pword VARCHAR)
+    RETURNS TABLE (
+        only_username VARCHAR
+    )
+AS $$
+BEGIN
+    return query (SELECT username FROM users WHERE uname = users.username AND pword = users.password);
+END;
+$$ LANGUAGE plpgsql;
