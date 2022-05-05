@@ -63,25 +63,38 @@ language plpgsql;
 create or replace function f_searchType(
     f_type varchar default null,
     f_condition varchar default null,
-    f_pricemax double precision default 999999999,
+    f_pricemax double precision default 9999999,
     f_pricemin double precision default 0)
     returns setof products as
     $$
         begin
-            if f_pricemax != 999999 and f_pricemin != 0 and f_type is null and f_condition is null then
-                return query (select * from products where f_pricemax >= products.price and f_pricemin <= products.price and status = 'Not Sold');
+            if f_pricemax <= 9999999 and f_pricemin >= 0 and f_type is null and f_condition is null then
+                return query (select * from products where f_pricemax >= products.price and f_pricemin <= products.price and status = 'Not sold');
 
             elsif f_type is null and f_condition is not null then
-                return query (select * from products where f_condition = products.condition and f_pricemax >= products.price and f_pricemin <= products.price and status = 'Not Sold');
+                return query (select * from products where f_condition = products.condition and f_pricemax >= products.price and f_pricemin <= products.price and status = 'Not sold');
 
             elsif f_condition is null and f_type is not null then
-                return query (select * from products where f_type = products.type and f_pricemax >= products.price and f_pricemin <= products.price and status = 'Not Sold');
+                return query (select * from products where f_type = products.type and f_pricemax >= products.price and f_pricemin <= products.price and status = 'Not sold');
 
             else
-                return query (select * from products where f_type = products.type and f_condition = products.condition and f_pricemax >= products.price and f_pricemin <= products.price and status = 'Not Sold');
+                return query (select * from products where f_type = products.type and f_condition = products.condition and f_pricemax >= products.price and f_pricemin <= products.price and status = 'Not sold');
 
             end if;
         end;
     $$
 
 language plpgsql;
+
+
+
+--RETURNS USERNAME IF LOGIN SUCCESSFUL
+CREATE OR REPLACE FUNCTION f_login_user(uname VARCHAR, pword VARCHAR)
+    RETURNS TABLE (
+        only_username VARCHAR
+    )
+AS $$
+BEGIN
+    return query (SELECT username FROM users WHERE uname = users.username AND pword = users.password);
+END;
+$$ LANGUAGE plpgsql;
