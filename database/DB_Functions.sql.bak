@@ -60,7 +60,7 @@ create or replace procedure p_removeproduct(f_id uuid)
 
 language plpgsql;
 
-create or replace function f_searchType(
+create or replace function f_product_search(
     f_type varchar default null,
     f_condition varchar default null,
     f_pricemax double precision default 9999999,
@@ -143,6 +143,8 @@ END;
 $$ LANGUAGE plpgsql;
 
 create trigger notification_trigger after insert on products execute procedure trigger_procedure();
+
+language plpgsql;
 
 create or replace function trigger_procedure() returns trigger as
     $$

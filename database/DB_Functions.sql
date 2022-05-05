@@ -60,7 +60,7 @@ create or replace procedure p_removeproduct(f_id uuid)
 
 language plpgsql;
 
-create or replace function f_searchType(
+create or replace function f_product_search(
     f_type varchar default null,
     f_condition varchar default null,
     f_pricemax double precision default 9999999,
@@ -142,19 +142,17 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-create trigger notification_trigger after insert on products execute procedure trigger_procedure();
+create trigger t_notification_trigger after insert on products execute procedure f_notification_trigger();
 
-language plpgsql;
+create or replace function f_notification_trigger() returns trigger as
+$$
+BEGIN
+    INSERT INTO notifications (recipient, message)
+    SELECT subscription.user, subscription.type
+    FROM subscription
+    WHERE type = new.type;
+    return new;
+end;
+$$
 
-create or replace function trigger_procedure() returns trigger as
-    $$
-        BEGIN
-            INSERT INTO notifications (recipient, message)
-            SELECT subscription.user, subscription.type
-            FROM subscription
-            WHERE type = new.type;
-            return new;
-        end;
-    $$
-
-language plpgsql;
+    language plpgsql;
