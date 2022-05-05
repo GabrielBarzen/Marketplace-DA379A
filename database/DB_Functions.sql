@@ -108,15 +108,6 @@ create or replace procedure add_subscription(username varchar, type varchar) as
 
 language plpgsql;
 
-create or replace procedure add_notification(f_recipient varchar, f_message varchar) as
-    $$
-        BEGIN
-            insert into notifications values (f_recipient, f_message);
-        end;
-    $$
-
-language plpgsql;
-
 create or replace function f_showpurchasehistory(
     f_username varchar
 ) returns table (
@@ -150,3 +141,20 @@ BEGIN
     return query (SELECT username FROM users WHERE uname = users.username AND pword = users.password);
 END;
 $$ LANGUAGE plpgsql;
+
+create trigger notification_trigger after insert on products execute procedure trigger_procedure();
+
+language plpgsql;
+
+create or replace function trigger_procedure() returns trigger as
+    $$
+        BEGIN
+            INSERT INTO notifications (recipient, message)
+            SELECT subscription.user, subscription.type
+            FROM subscription
+            WHERE type = new.type;
+            return new;
+        end;
+    $$
+
+language plpgsql;

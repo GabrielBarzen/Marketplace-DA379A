@@ -98,3 +98,61 @@ BEGIN
     return query (SELECT username FROM users WHERE uname = users.username AND pword = users.password);
 END;
 $$ LANGUAGE plpgsql;
+
+create or replace procedure add_subscription(username varchar, type varchar) as
+    $$
+        BEGIN
+            insert into subscription values (username, type);
+        end;
+    $$
+
+language plpgsql;
+
+create or replace function f_showpurchasehistory(
+    f_username varchar
+) returns table (
+    username varchar,
+    purchase_date date,
+    order_id uuid,
+    product_id uuid,
+    product_name varchar,
+    price double precision,
+    date_of_make date,
+    product_type varchar,
+    product_color varchar,
+    product_condition varchar,
+    status varchar,
+    seller varchar
+    ) as
+    $$
+
+    BEGIN
+        return query select "user", orders.date, orders.id, products.id, products.name, products.price, products.date, products."type", products.color, products.condition, products.status, products.seller from orders full outer join orders_products on orders.id = orders_products.orders_id full join products on products.id = orders_products.products_id where user = f_username;
+    end
+$$
+language plpgsql;
+
+CREATE OR REPLACE FUNCTION f_login_user(uname VARCHAR, pword VARCHAR)
+    RETURNS TABLE (
+        only_username VARCHAR
+    )
+AS $$
+BEGIN
+    return query (SELECT username FROM users WHERE uname = users.username AND pword = users.password);
+END;
+$$ LANGUAGE plpgsql;
+
+create trigger notification_trigger after insert on products execute procedure trigger_procedure();
+
+create or replace function trigger_procedure() returns trigger as
+    $$
+        BEGIN
+            INSERT INTO notifications (recipient, message)
+            SELECT subscription.user, subscription.type
+            FROM subscription
+            WHERE type = new.type;
+            return new;
+        end;
+    $$
+
+language plpgsql;
