@@ -9,7 +9,6 @@ import java.util.Calendar;
 
 
 @RestController()
-//@RequestMapping(value = "/api/v01")
 public class MarketplaceController {
 
     int testid = 0;
@@ -32,6 +31,10 @@ public class MarketplaceController {
         return gson.toJson(product);
     }
 
+    @RequestMapping(value = "/products/buy={productID}", method = RequestMethod.GET)
+    public void buyButtonPressed(@PathVariable String productID) {
+        System.out.println(productID);
+    }
 
 
 
