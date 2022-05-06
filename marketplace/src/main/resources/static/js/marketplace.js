@@ -46,6 +46,5 @@ function getProducts() {
 function addItemToCart(productID) {
     console.log("buying : " + productID);
     $.ajax({url: url + "/products/buy=" + productID, success: function(result){
-
         }});
 }
