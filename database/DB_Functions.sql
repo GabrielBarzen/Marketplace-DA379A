@@ -156,3 +156,13 @@ end;
 $$
 
     language plpgsql;
+	
+create or replace procedure p_update_read_status(f_username varchar) as
+    $$
+        BEGIN
+            update notifications
+            set read = true where f_username = notifications.recipient;
+        end;
+    $$
+
+    language plpgsql;
