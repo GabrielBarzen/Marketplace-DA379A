@@ -65,18 +65,17 @@ public class ProductManagement {
         return products;
     }
 
-    public ArrayList<Types> getTypes() {
-        ArrayList<Types> types = new ArrayList<>();
-
+    public Types getTypes() {
+        Types types = new Types();
         try {
             ResultSet rs = db.f_get_types();
 
             while(rs.next()) {
-                Types type = new Types();
 
-                type.setType(rs.getString(1));
 
-                types.add(type);
+                types.addType(rs.getString(1));
+
+
 
             }
         } catch (SQLException e) {
@@ -85,17 +84,17 @@ public class ProductManagement {
         return types;
     }
 
-    public ArrayList<Colors> getColors() {
-        ArrayList<Colors> colors = new ArrayList<>();
+    public Colors getColors() {
+        Colors colors = new Colors();
         try {
             ResultSet rs = db.f_get_colors();
 
             while(rs.next()) {
-                Colors color = new Colors();
 
-                color.setColor(rs.getString(1));
 
-                colors.add(color);
+                colors.addColors(rs.getString(1));
+
+
 
             }
         } catch (SQLException e) {
@@ -104,17 +103,17 @@ public class ProductManagement {
         return colors;
     }
 
-    public ArrayList<Conditions> getConditions() {
-        ArrayList<Conditions> conditions = new ArrayList<>();
+    public Conditions getConditions() {
+        Conditions conditions = new Conditions();
         try {
             ResultSet rs = db.f_get_colors();
 
             while(rs.next()) {
-                Conditions condition = new Conditions();
 
-                condition.setCondition(rs.getString(1));
 
-                conditions.add(condition);
+                conditions.addCondition(rs.getString(1));
+
+
 
             }
         } catch (SQLException e) {
@@ -123,17 +122,26 @@ public class ProductManagement {
         return conditions;
     }
 
+    public static void main(String[] args) {
+        new ProductManagement();
+    }
+    public ProductManagement(){
+        System.out.println(getProductSellLists());
+    }
     
     public String getProductSellLists() {
         Gson gson = new Gson();
-        
-        JsonObject jsonObject = new JsonObject();
 
-        jsonObject.addProperty("Types", gson.toJson(getTypes()));
-        jsonObject.addProperty("Conditions", gson.toJson(getConditions()));
-        jsonObject.addProperty("Color", gson.toJson(getColors()));
+        String typeString = gson.toJson(getTypes());
+        String conditionString = gson.toJson(getConditions());
+        String colorString = gson.toJson(getColors());
 
-        String str = gson.toJson(jsonObject);
+        String str = "{"+ typeString +","+ conditionString +","+ colorString +"}";
+        str = str.replaceAll("\\{", "");
+        str = str.replaceAll("}", "");
+
+        str = "{"+str+"}";
+
         return str;
     }
 

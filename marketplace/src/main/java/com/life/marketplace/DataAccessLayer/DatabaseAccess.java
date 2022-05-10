@@ -2,7 +2,7 @@ package com.life.marketplace.DataAccessLayer;
 
 import java.sql.*;
 import java.util.ArrayList;
-import com.life.marketplace.model.Product;
+import com.life.marketplace.model.Products;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

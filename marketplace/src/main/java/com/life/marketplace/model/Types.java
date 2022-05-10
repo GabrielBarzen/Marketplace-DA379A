@@ -1,17 +1,20 @@
 package com.life.marketplace.model;
 
 
+import java.util.ArrayList;
+
 public class Types {
 
-  private String type;
+  private ArrayList<String> types = new ArrayList<>();
 
 
-  public String getType() {
-    return type;
+  public ArrayList<String> getTypes() {
+    return types;
   }
 
-  public void setType(String type) {
-    this.type = type;
+  public void addType(String type) {
+    types.add(type);
   }
+  public void removeType(String type){types.remove(type);}
 
 }

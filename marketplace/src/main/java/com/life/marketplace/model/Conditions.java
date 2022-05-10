@@ -1,17 +1,22 @@
 package com.life.marketplace.model;
 
 
+import java.util.ArrayList;
+
 public class Conditions {
 
-  private String condition;
+  private ArrayList<String> conditions = new ArrayList<>();
 
 
-  public String getCondition() {
-    return condition;
+  public ArrayList<String> getConditions() {
+    return conditions;
   }
 
-  public void setCondition(String condition) {
-    this.condition = condition;
+
+  public void addCondition(String Condition) {
+    conditions.add(Condition);
   }
+  public void removeCondition(String Condition){conditions.remove(Condition);}
+
 
 }

@@ -1,17 +1,19 @@
 package com.life.marketplace.model;
 
 
+import java.util.ArrayList;
+
 public class Colors {
 
-  private String color;
+  private ArrayList<String> colors = new ArrayList<String>();
 
 
-  public String getColor() {
-    return color;
+  public ArrayList<String> getColors() {
+    return colors;
   }
 
-  public void setColor(String color) {
-    this.color = color;
+  public void addColors(String color) {
+    colors.add(color);
   }
-
+  public void removeColors(String color){colors.remove(color);}
 }
