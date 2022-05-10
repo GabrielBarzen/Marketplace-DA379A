@@ -1,6 +1,6 @@
 package com.life.marketplace.model;
 
-public class Users {
+public class User {
 
   private String username;
   private String email;

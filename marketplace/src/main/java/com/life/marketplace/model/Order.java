@@ -1,7 +1,7 @@
 package com.life.marketplace.model;
 
 
-public class Orders {
+public class Order {
 
   private String id;
   private String user;

@@ -1,7 +1,7 @@
 package com.life.marketplace.model;
 
 
-public class Types {
+public class Type {
 
   private String type;
 

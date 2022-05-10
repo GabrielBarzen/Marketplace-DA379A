@@ -1,7 +1,7 @@
 package com.life.marketplace.model;
 
 
-public class Notifications {
+public class Notification {
 
   private String id;
   private String recipient;

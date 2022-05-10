@@ -1,7 +1,7 @@
 package com.life.marketplace.model;
 
 
-public class Products {
+public class Product {
 
   private String id;
   private double price;
