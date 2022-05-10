@@ -2,6 +2,7 @@ package com.life.marketplace.BusinessLogicLayer;
 
 import com.life.marketplace.DataAccessLayer.DatabaseAccess;
 import com.life.marketplace.model.Product;
+import com.life.marketplace.model.User;
 
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -14,71 +15,69 @@ import java.sql.SQLException;
 
 public class UserManagement {
 
-    public DatabaseAccess db = new DatabaseAccess();
-    public boolean loginUser(String username, String password) {
+    private DatabaseAccess db = new DatabaseAccess();
 
-        DatabaseAccess db = new DatabaseAccess();
-        String response = "kaozzzz";
+    public boolean loginUser(String username, String password) {
         boolean success = false;
-        ResultSet rs = null;
+        ResultSet rs;
 
         try {
             rs = db.f_login_user(username, password);
 
-            if (rs.next()) {
-                response = rs.getString(1);
-            }
+           while (rs.next()) {
+               success = rs.getBoolean(1);
+           }
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-        if (response != null && response.equals(username)) {
-            success = true;
-        }
-
         return success;
     }
 
-    public ArrayList<Product> getAllProducts() {
+    public boolean registerUser(String username, String email, String password, Date birthdate, String firstname, String lastname) {
+        boolean success = false;
+        ResultSet rs;
+        try {
+            rs = db.f_register_user(username, email, password, birthdate, firstname, lastname);
+            while (rs.next()) {
+                success = rs.getBoolean(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return success;
+    }
 
+    public static void main(String[] args) {
+        UserManagement userManagement = new UserManagement();
+        System.out.println(userManagement.loginUser("Nicholas", "INeedACane"));
+    }
+
+    public boolean updateReadStatus(String username) {
+        return db.p_update_read_status(username);
+    }
+
+    public boolean deleteUser(String username) {
+        return db.p_delete_user(username);
+    }
+
+    public boolean addSubscription(String username, String type) {
+        return db.p_add_subscription(username, type);
+    }
+
+    public ArrayList<Product> showPurchaseHistory(String username, Date startDate, Date endDate) {
         ArrayList<Product> products = new ArrayList<>();
 
         try {
-            Product product = new Product();
 
-            ResultSet rs = db.f_get_all_products();
-
-            while (rs.next()) {
-                product.setId(rs.getString(1));
-                product.setPrice(Double.parseDouble(rs.getString(2)));
-                product.setDate(rs.getDate(3));
-                product.setType(rs.getString(4));
-                product.setColor(rs.getString(5));
-                product.setCondition(rs.getString(6));
-                product.setStatus(rs.getString(7));
-                product.setSeller(rs.getString(8));
-                product.setName(rs.getString(9));
-
-                products.add(product);
-            }
+            products = ObjectCreator.createProductList(db.f_show_purchase_history(username, startDate, endDate));
 
         } catch (SQLException e) {
-            System.out.println("Nä du det ballade ur");
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
-
-        return products;
+            return products;
     }
 
-    public boolean addProduct(Double price, Date date, String type, String color, String condition, String sellerName, String productName) {
 
-        try {
-            db.p_add_product(price, date, type, condition, color, sellerName, productName);
-        } catch (SQLException e) {
-            System.out.println("MAMMM VA FRETT");
-        }
 
-        return false;
-    }
 }

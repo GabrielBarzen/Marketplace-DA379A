@@ -3,6 +3,8 @@ package com.life.marketplace.DataAccessLayer;
 import java.sql.*;
 import java.util.ArrayList;
 import com.life.marketplace.model.Product;
+import org.hibernate.tool.schema.ast.SqlScriptParserException;
+
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,8 +16,6 @@ import java.util.Properties;
 import java.util.UUID;
 
 public class DatabaseAccess {
-
-    java.sql.Connection dbConnection;
     private String modelDbName = "dbadmin";
     private String modelDbPassword = "XEHjqXmGh2GYT2zfjJFkpQR8TQjjsk9aHPPiynUHYVqc5ycnf6jM5by2FFncgGY2Mr9UJvaQKFkxnhy8BUQ72ra3TCZmyYFV3mDoFuxLZC3zML6b6Cqp286wb5GmFupj";
     private String url = "jdbc:postgresql://gabnet.se:5432/marketplace_da397a";
@@ -24,7 +24,9 @@ public class DatabaseAccess {
 
     }
 
-    public java.sql.Connection getDbConnection() {
+    public Connection getDbConnection() {
+        Connection dbConnection = null;
+
         try {
             Properties connectionProps = new Properties();
             connectionProps.put("user", modelDbName);
@@ -40,6 +42,7 @@ public class DatabaseAccess {
         return dbConnection;
     }
 
+
     public static void main(String[] args) {
         DatabaseAccess databaseAccess = new DatabaseAccess();
 
@@ -52,38 +55,62 @@ public class DatabaseAccess {
         return statement.executeQuery();
     }
 
+    public ResultSet f_add_to_cart(String username, UUID productID) throws SQLException {
+        String query = "SELECT * FROM f_product_search(?,?);";
 
+        PreparedStatement statement = getDbConnection().prepareStatement(query);
 
-    public boolean f_add_to_cart(String username, UUID productID) {
-        String query = String.format("SELECT * FROM f_add_to_cart(%s, %s)", username, productID);
-        boolean success;
+        statement.setString(1, username);
+        statement.setString(2, productID.toString());
 
-        try {
-            PreparedStatement statement = getDbConnection().prepareStatement(query);
-            statement.execute();
-            success = true;
-        } catch (SQLException e) {
-            success = false;
-        }
-        return success;
+        return statement.executeQuery();
     }
 
-    public ResultSet f_product_search(String type, String condition, double maxPrice, double minPrice) {
-        return null;
+    public ResultSet f_product_search(String type, String condition, double maxPrice, double minPrice) throws SQLException {
+        String query = "SELECT * FROM f_product_search(?,?,?,?);";
+
+        PreparedStatement statement = getDbConnection().prepareStatement(query);
+
+        statement.setString(1, type);
+        statement.setString(2, condition);
+        statement.setDouble(3, maxPrice);
+        statement.setDouble(4, minPrice);
+
+        return statement.executeQuery();
     }
 
-    public ResultSet f_register_user(String username, String email, String password, Date birthdate, String firstname, String lastname) {
-        return null;
+    public ResultSet f_register_user(String username, String email, String password, Date birthdate, String firstname, String lastname) throws SQLException {
+        String query = "SELECT * FROM f_register_user(?,?,?,?,?,?);";
+
+        PreparedStatement statement = getDbConnection().prepareStatement(query);
+
+        statement.setString(1, username);
+        statement.setString(2, email);
+        statement.setString(3, password);
+        statement.setDate  (4, birthdate);
+        statement.setString(5, firstname);
+        statement.setString(6, lastname);
+
+        return statement.executeQuery();
     }
 
-    public ResultSet f_show_purchase_history(String username, Date startDate, Date endDate) {
-        return null;
-    }
+    public ResultSet f_show_purchase_history(String username, Date startDate, Date endDate) throws SQLException {
+        String query = "SELECT * FROM f_show_purchase_history(?,?,?);";
 
+        PreparedStatement statement = getDbConnection().prepareStatement(query);
+
+        statement.setString(1, username);
+        statement.setDate  (2, startDate);
+        statement.setDate  (3, endDate);
+
+
+        return statement.executeQuery();
+    }
 
     public ResultSet f_login_user(String username, String password) throws SQLException {
         String query = "SELECT f_login_user(?, ?);";
-        PreparedStatement statement = dbConnection.prepareStatement(query);
+
+        PreparedStatement statement = getDbConnection().prepareStatement(query);
 
         statement.setString(1, username);
         statement.setString(2, password);
@@ -95,7 +122,7 @@ public class DatabaseAccess {
      * PROCEDURES BELOW
      ***********************************/
 
-    public boolean p_add_product(Double price, Date date, String type, String color, String condition, String sellerName, String productName) throws SQLException {
+    public boolean p_add_product(Double price, Date date, String type, String color, String condition, String sellerName, String productName) {
         boolean success;
         try {
             String query = "call p_add_product(?,?,?,?,?,?,?)";
@@ -115,8 +142,7 @@ public class DatabaseAccess {
         return success;
     }
 
-
-    public boolean p_add_subscription(String username, String type) throws SQLException {
+    public boolean p_add_subscription(String username, String type) {
         boolean success;
         try {
             String query = "CALL p_add_subscription(?,?)";
@@ -131,22 +157,7 @@ public class DatabaseAccess {
         return success;
     }
 
-    //Tem-------------------------plate PLS NO USE MR GABIRELO 💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩
-    public boolean p_create_order(String username) {
-        boolean success;
-        try {
-            String query = "CALL p_create_order(?)";
-            PreparedStatement statement = getDbConnection().prepareStatement(query);
-            statement.setString(1,username);
-            statement.execute();
-            success = true;
-        }catch (SQLException e) {
-            success = false;
-        }
-        return success;
-    }
-
-    public boolean p_delete_user(String username) throws SQLException {
+    public boolean p_delete_user(String username) {
         boolean success;
         try {
             String query = "CALL p_delete_user(?)";
@@ -160,12 +171,12 @@ public class DatabaseAccess {
         return success;
     }
 
-    public boolean p_remove_product(UUID uuid) {
+    public boolean p_remove_product(UUID productID) {
         boolean success;
         try {
             String query = "CALL p_remove_product(?)";
             PreparedStatement statement = getDbConnection().prepareStatement(query);
-            statement.setString(1,uuid.toString());
+            statement.setString(1, productID.toString());
             statement.execute();
             success = true;
         } catch (SQLException e) {
@@ -188,7 +199,7 @@ public class DatabaseAccess {
             return success;
     }
 
-    public boolean p_user_place_order(UUID orderID) throws SQLException {
+    public boolean p_user_place_order(UUID orderID) {
         boolean success;
         try {
             String query = "CALL p_user_place_order(?)";
@@ -201,7 +212,6 @@ public class DatabaseAccess {
         }
         return success;
     }
-
 
     public boolean p_add_to_cart(String username, UUID productID) {
         boolean success;
@@ -217,6 +227,4 @@ public class DatabaseAccess {
         }
         return success;
     }
-
-
 }
