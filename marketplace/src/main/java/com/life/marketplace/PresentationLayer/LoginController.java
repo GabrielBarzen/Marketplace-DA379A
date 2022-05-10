@@ -9,10 +9,7 @@ import org.springframework.web.bind.annotation.*;
 @Controller()
 public class LoginController {
 
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String getLogin() {
-        return "login.html";
-    }
+
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ResponseBody
@@ -22,6 +19,7 @@ public class LoginController {
 
         ResponseEntity<String> response;
         boolean loginSuccessful = new UserManagement().loginUser(username, password);
+        System.out.println(loginSuccessful);
 
         if (loginSuccessful) {
             response = new ResponseEntity<>("Login successful", HttpStatus.OK);
