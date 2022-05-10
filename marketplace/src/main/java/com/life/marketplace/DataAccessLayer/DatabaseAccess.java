@@ -68,10 +68,6 @@ public class DatabaseAccess {
         return success;
     }
 
-    public ResultSet f_login_user(String username, String password) {
-        return null;
-    }
-
     public ResultSet f_product_search(String type, String condition, double maxPrice, double minPrice) {
         return null;
     }
