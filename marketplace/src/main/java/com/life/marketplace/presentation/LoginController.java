@@ -6,15 +6,16 @@ import org.springframework.web.bind.annotation.*;
 @Controller()
 //@RequestMapping(path = "/login")
 public class LoginController {
-    //@RequestMapping(value="/login?uname={username}&pword={password}", method=RequestMethod.POST)
 
-    @RequestMapping("/login")
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String getLogin() {
         return "login.html";
     }
 
-    @RequestMapping(value = "/login/username={username}&password={password}", method = RequestMethod.POST)
-    public void loginUser(@PathVariable String username, @PathVariable String password){
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    @ResponseBody
+    public void loginUser(@RequestParam("username") String username, @RequestParam("password") String password){
+
         System.out.println("nice");
         System.out.println(username + " nice " + password);
 
