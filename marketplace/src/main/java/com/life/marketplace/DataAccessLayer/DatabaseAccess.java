@@ -3,8 +3,6 @@ package com.life.marketplace.DataAccessLayer;
 import java.sql.*;
 import java.util.ArrayList;
 import com.life.marketplace.model.Product;
-import org.hibernate.tool.schema.ast.SqlScriptParserException;
-
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -18,7 +16,7 @@ import java.util.UUID;
 public class DatabaseAccess {
     private String modelDbName = "dbadmin";
     private String modelDbPassword = "XEHjqXmGh2GYT2zfjJFkpQR8TQjjsk9aHPPiynUHYVqc5ycnf6jM5by2FFncgGY2Mr9UJvaQKFkxnhy8BUQ72ra3TCZmyYFV3mDoFuxLZC3zML6b6Cqp286wb5GmFupj";
-    private String url = "jdbc:postgresql://gabnet.se:5432/marketplace_da397a";
+    private String url = "jdbc:postgresql://10.0.0.1:5432/marketplace_da397a";
 
     public DatabaseAccess() {
 

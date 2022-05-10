@@ -10,6 +10,11 @@ public class StaticController {
         return "login.html";
     }
 
+    @RequestMapping("/login")
+    public String getLogin() {
+        return "login.html";
+    }
+
     @RequestMapping("/registration")
     public String getRegister() {
         return "registration.html";
@@ -23,6 +28,16 @@ public class StaticController {
     @RequestMapping("/cart")
     public String getCart() {
         return "cart.html";
+    }
+
+    @RequestMapping("/offers")
+    public String getOffers() {
+        return "offers.html";
+    }
+
+    @RequestMapping("/sell")
+    public String getSell() {
+        return "sell.html";
     }
 
 }
