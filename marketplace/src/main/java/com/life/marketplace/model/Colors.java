@@ -1,7 +1,7 @@
 package com.life.marketplace.model;
 
 
-public class Color {
+public class Colors {
 
   private String color;
 

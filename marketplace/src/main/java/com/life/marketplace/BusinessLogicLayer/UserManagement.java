@@ -1,17 +1,13 @@
 package com.life.marketplace.BusinessLogicLayer;
 
 import com.life.marketplace.DataAccessLayer.DatabaseAccess;
-import com.life.marketplace.model.Product;
-import com.life.marketplace.model.User;
+import com.life.marketplace.model.Products;
 
 import java.sql.Date;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 
 public class UserManagement {
 
@@ -65,8 +61,8 @@ public class UserManagement {
         return db.p_add_subscription(username, type);
     }
 
-    public ArrayList<Product> showPurchaseHistory(String username, Date startDate, Date endDate) {
-        ArrayList<Product> products = new ArrayList<>();
+    public ArrayList<Products> showPurchaseHistory(String username, Date startDate, Date endDate) {
+        ArrayList<Products> products = new ArrayList<>();
 
         try {
 

@@ -1,15 +1,11 @@
 package com.life.marketplace.DataAccessLayer;
 
 import java.sql.*;
-import java.util.ArrayList;
-import com.life.marketplace.model.Product;
-import org.hibernate.tool.schema.ast.SqlScriptParserException;
-
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
+
 
 
 import java.util.Properties;
@@ -40,12 +36,6 @@ public class DatabaseAccess {
         }
 
         return dbConnection;
-    }
-
-
-    public static void main(String[] args) {
-        DatabaseAccess databaseAccess = new DatabaseAccess();
-
     }
 
     public ResultSet f_get_all_products() throws SQLException {
@@ -114,6 +104,30 @@ public class DatabaseAccess {
 
         statement.setString(1, username);
         statement.setString(2, password);
+
+        return statement.executeQuery();
+    }
+
+    public ResultSet f_get_types() throws SQLException{
+        String query = "select * from f_get_types();";
+
+        PreparedStatement statement = getDbConnection().prepareStatement(query);
+
+        return statement.executeQuery();
+    }
+
+    public ResultSet f_get_colors() throws SQLException{
+        String query = "select * from f_get_colors();";
+
+        PreparedStatement statement = getDbConnection().prepareStatement(query);
+
+        return statement.executeQuery();
+    }
+
+    public ResultSet f_get_conditions() throws SQLException{
+        String query = "select * from f_get_conditions();";
+
+        PreparedStatement statement = getDbConnection().prepareStatement(query);
 
         return statement.executeQuery();
     }

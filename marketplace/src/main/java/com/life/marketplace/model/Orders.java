@@ -1,12 +1,13 @@
 package com.life.marketplace.model;
 
 
-public class Order {
+public class Orders {
 
   private String id;
   private String user;
   private java.sql.Date date;
   private String status;
+  private String product;
 
 
   public String getId() {
@@ -42,6 +43,15 @@ public class Order {
 
   public void setStatus(String status) {
     this.status = status;
+  }
+
+
+  public String getProduct() {
+    return product;
+  }
+
+  public void setProduct(String product) {
+    this.product = product;
   }
 
 }

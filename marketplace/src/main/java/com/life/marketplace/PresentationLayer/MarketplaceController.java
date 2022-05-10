@@ -1,7 +1,7 @@
 package com.life.marketplace.PresentationLayer;
 
 import com.google.gson.Gson;
-import com.life.marketplace.model.Product;
+import com.life.marketplace.model.Products;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Date;
@@ -16,7 +16,7 @@ public class MarketplaceController {
     public String getProducts() {
         Calendar calendar = Calendar.getInstance();
         calendar.set(1999,Calendar.OCTOBER,7);
-        Product product = new Product();
+        Products product = new Products();
         product.setId(String.valueOf(testid++));
         product.setName("macbook");
         product.setPrice(20000000);

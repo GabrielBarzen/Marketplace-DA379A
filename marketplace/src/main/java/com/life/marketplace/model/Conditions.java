@@ -1,7 +1,7 @@
 package com.life.marketplace.model;
 
 
-public class Condition {
+public class Conditions {
 
   private String condition;
 

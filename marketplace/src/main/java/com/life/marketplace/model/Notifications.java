@@ -1,12 +1,13 @@
 package com.life.marketplace.model;
 
 
-public class Notification {
+public class Notifications {
 
   private String id;
   private String recipient;
   private String read;
   private String message;
+  private java.sql.Date date;
 
 
   public String getId() {
@@ -42,6 +43,15 @@ public class Notification {
 
   public void setMessage(String message) {
     this.message = message;
+  }
+
+
+  public java.sql.Date getDate() {
+    return date;
+  }
+
+  public void setDate(java.sql.Date date) {
+    this.date = date;
   }
 
 }

@@ -1,7 +1,7 @@
 package com.life.marketplace.model;
 
 
-public class Product {
+public class Products {
 
   private String id;
   private double price;
@@ -13,13 +13,6 @@ public class Product {
   private String seller;
   private String name;
 
-  public String getName() {
-    return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
-  }
 
   public String getId() {
     return id;
@@ -90,6 +83,15 @@ public class Product {
 
   public void setSeller(String seller) {
     this.seller = seller;
+  }
+
+
+  public String getName() {
+    return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
   }
 
 }

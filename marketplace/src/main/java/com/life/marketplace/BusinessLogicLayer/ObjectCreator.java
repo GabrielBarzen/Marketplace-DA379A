@@ -1,6 +1,6 @@
 package com.life.marketplace.BusinessLogicLayer;
 
-import com.life.marketplace.model.Product;
+import com.life.marketplace.model.Products;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -9,11 +9,11 @@ import java.util.ArrayList;
 public class ObjectCreator {
 
 
-    public static ArrayList<Product> createProductList(ResultSet rs) throws SQLException {
-        ArrayList<Product> products = new ArrayList<>();
+    public static ArrayList<Products> createProductList(ResultSet rs) throws SQLException {
+        ArrayList<Products> products = new ArrayList<>();
 
         while (rs.next()) {
-            Product product = new Product();
+            Products product = new Products();
 
             product.setId       (rs.getString(1));
             product.setPrice    (rs.getDouble(2));
