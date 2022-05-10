@@ -76,9 +76,13 @@ public class DatabaseAccess {
     }
 
     public ResultSet f_login_user(String username, String password) throws SQLException {
-        String query = String.format("SELECT f_login_user('%s', '%s');", username, password);
-
+//        String query = String.format("SELECT f_login_user('%s', '%s');", username, password);
+        String query = "SELECT f_login_user(?, ?);";
         PreparedStatement statement = dbConnection.prepareStatement(query);
+
+        statement.setString(1, username);
+        statement.setString(2, password);
+
         return statement.executeQuery();
     }
 
