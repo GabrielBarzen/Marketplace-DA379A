@@ -12,7 +12,7 @@ function loginButtonPressed() {
 
 function loginUser(username, password) {
     console.log("logging in : " + username + " with password : " + password);
-    $.ajax({url: "/login/username="+username+"&password=" + password,
+    $.ajax({url: "/login?username="+username+"&password=" + password,
         method: "POST",
         headers: {"Accept": "application/json"},
         });
