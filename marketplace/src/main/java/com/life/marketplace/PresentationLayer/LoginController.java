@@ -7,7 +7,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @Controller()
-//@RequestMapping(path = "/login")
 public class LoginController {
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
@@ -32,10 +31,5 @@ public class LoginController {
 
         return response;
     }
-
-    @PostMapping("/++")
-    public void loginUser(){
-        System.out.println("nice");
-        System.out.println("asdf");
-    }
+    
 }

@@ -9,14 +9,35 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 public class UserManagement {
 
     public DatabaseAccess db = new DatabaseAccess();
     public boolean loginUser(String username, String password) {
 
-//        ResultSet rs = db.loginUser(username, password);
+        DatabaseAccess db = new DatabaseAccess();
+        String response = "kaozzzz";
+        boolean success = false;
+        ResultSet rs = null;
 
-        return false;
+        try {
+            rs = db.f_login_user(username, password);
+
+            if (rs.next()) {
+                response = rs.getString(1);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        if (response != null && response.equals(username)) {
+            success = true;
+        }
+
+        return success;
     }
 
     public ArrayList<Product> getAllProducts() {

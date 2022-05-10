@@ -3,6 +3,13 @@ package com.life.marketplace.DataAccessLayer;
 import java.sql.*;
 import java.util.ArrayList;
 import com.life.marketplace.model.Product;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
+
 import java.util.Properties;
 import java.util.UUID;
 
@@ -77,6 +84,16 @@ public class DatabaseAccess {
         return null;
     }
 
+
+    public ResultSet f_login_user(String username, String password) throws SQLException {
+        String query = "SELECT f_login_user(?, ?);";
+        PreparedStatement statement = dbConnection.prepareStatement(query);
+
+        statement.setString(1, username);
+        statement.setString(2, password);
+
+        return statement.executeQuery();
+    }
     
     /***********************************
      * PROCEDURES BELOW
