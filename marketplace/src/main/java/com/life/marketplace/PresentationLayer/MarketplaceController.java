@@ -1,4 +1,4 @@
-package com.life.marketplace.presentation;
+package com.life.marketplace.PresentationLayer;
 
 import com.google.gson.Gson;
 import com.life.marketplace.model.Product;

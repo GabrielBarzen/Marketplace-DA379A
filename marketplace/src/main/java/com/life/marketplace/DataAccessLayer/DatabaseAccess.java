@@ -1,14 +1,12 @@
-package com.life.marketplace.data_access;
-
-import com.life.marketplace.model.Product;
-import org.springframework.jdbc.core.JdbcTemplate;
+package com.life.marketplace.DataAccessLayer;
 
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Properties;
+import com.life.marketplace.model.Products;
+
 import java.util.UUID;
 
 public class DatabaseAccess {
