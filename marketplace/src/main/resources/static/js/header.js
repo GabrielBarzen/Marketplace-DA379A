@@ -12,6 +12,15 @@ function changeLoggedInLabel() {
         document.getElementById('login-link').onclick = function() {
             logout();
         }
+
+        $("#cart-link").show();
+        $("#offers-link").show();
+        $("#sell-link").show();
+
+    } else {
+        $("#cart-link").hide();
+        $("#offers-link").hide();
+        $("#sell-link").hide();
     }
 }
 

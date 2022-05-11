@@ -104,7 +104,7 @@ public class ProductManagement {
     public Conditions getConditions() {
         Conditions conditions = new Conditions();
         try {
-            ResultSet rs = db.f_get_colors();
+            ResultSet rs = db.f_get_conditions();
 
             while(rs.next()) {
 
