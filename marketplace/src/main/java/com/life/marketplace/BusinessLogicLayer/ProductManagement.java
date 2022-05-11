@@ -1,8 +1,5 @@
 package com.life.marketplace.BusinessLogicLayer;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import com.google.gson.Gson;
 import com.life.marketplace.DataAccessLayer.DatabaseAccess;
 
@@ -21,9 +18,9 @@ public class ProductManagement {
         return db.p_add_product(price, date, type, condition, color, sellerName, productName);
     }
 
-    public ArrayList<Products> getAllProducts() {
+    public ArrayList<Product> getAllProducts() {
 
-        ArrayList<Products> products = new ArrayList<>();
+        ArrayList<Product> products = new ArrayList<>();
 
         try {
 
@@ -38,6 +35,7 @@ public class ProductManagement {
     }
 
     public boolean addToCart(String username, UUID productID) {
+        System.out.println("running db function add to cart with id : " + productID + ", and username : " + username);
         return db.p_add_to_cart(username, productID);
     }
 
@@ -49,9 +47,9 @@ public class ProductManagement {
         return db.p_remove_product(productID);
     }
 
-    public ArrayList<Products> productSearch(String type, String condition, double maxPrice, double minPrice) {
+    public ArrayList<Product> productSearch(String type, String condition, double maxPrice, double minPrice) {
 
-        ArrayList<Products> products = new ArrayList<>();
+        ArrayList<Product> products = new ArrayList<>();
 
         try {
 
@@ -145,4 +143,7 @@ public class ProductManagement {
         return str;
     }
 
+    public String getAllProductsJSON() {
+        return new Gson().toJson(getAllProducts());
+    }
 }

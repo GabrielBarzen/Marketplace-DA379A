@@ -1,8 +1,6 @@
 package com.life.marketplace.DataAccessLayer;
 
 import java.sql.*;
-import java.util.ArrayList;
-import com.life.marketplace.model.Products;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -16,7 +14,9 @@ import java.util.UUID;
 public class DatabaseAccess {
     private String modelDbName = "dbadmin";
     private String modelDbPassword = "XEHjqXmGh2GYT2zfjJFkpQR8TQjjsk9aHPPiynUHYVqc5ycnf6jM5by2FFncgGY2Mr9UJvaQKFkxnhy8BUQ72ra3TCZmyYFV3mDoFuxLZC3zML6b6Cqp286wb5GmFupj";
+
     private String url = "jdbc:postgresql://gabnet.se/marketplace_da397a";
+
 
     public DatabaseAccess() {
 
@@ -53,7 +53,7 @@ public class DatabaseAccess {
         PreparedStatement statement = getDbConnection().prepareStatement(query);
 
         statement.setString(1, username);
-        statement.setString(2, productID.toString());
+        statement.setObject(2, productID);
 
         return statement.executeQuery();
     }
@@ -192,7 +192,7 @@ public class DatabaseAccess {
         try {
             String query = "CALL p_remove_product(?)";
             PreparedStatement statement = getDbConnection().prepareStatement(query);
-            statement.setString(1, productID.toString());
+            statement.setObject(1, productID);
             statement.execute();
             success = true;
         } catch (SQLException e) {
@@ -220,7 +220,7 @@ public class DatabaseAccess {
         try {
             String query = "CALL p_user_place_order(?)";
             PreparedStatement statement = getDbConnection().prepareStatement(query);
-            statement.setString(1, orderID.toString());
+            statement.setObject(1, orderID);
             statement.execute();
             success = true;
         } catch (SQLException e) {
@@ -235,7 +235,7 @@ public class DatabaseAccess {
             String query = "CALL p_add_to_cart(?,?)";
             PreparedStatement statement = getDbConnection().prepareStatement(query);
             statement.setString(1, username);
-            statement.setString(2, productID.toString());
+            statement.setObject(2, productID);
             statement.execute();
             success = true;
         } catch (SQLException e) {
