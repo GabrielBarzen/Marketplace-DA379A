@@ -15,11 +15,11 @@ public class LoginController {
     @ResponseBody
     public ResponseEntity<String> loginUser(@RequestParam("username") String username,
                                             @RequestParam("password") String password) {
-        System.out.println(username + " nice " + password);
+
 
         ResponseEntity<String> response;
         boolean loginSuccessful = new UserManagement().loginUser(username, password);
-        System.out.println(loginSuccessful);
+
 
         if (loginSuccessful) {
             response = new ResponseEntity<>("Login successful", HttpStatus.OK);

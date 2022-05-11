@@ -14,8 +14,7 @@ import java.util.UUID;
 public class DatabaseAccess {
     private String modelDbName = "dbadmin";
     private String modelDbPassword = "XEHjqXmGh2GYT2zfjJFkpQR8TQjjsk9aHPPiynUHYVqc5ycnf6jM5by2FFncgGY2Mr9UJvaQKFkxnhy8BUQ72ra3TCZmyYFV3mDoFuxLZC3zML6b6Cqp286wb5GmFupj";
-
-    private String url = "jdbc:postgresql://gabnet.se/marketplace_da397a";
+    private String url = "jdbc:postgresql://10.0.0.1:5432/marketplace_da397a";
 
 
     public DatabaseAccess() {
@@ -30,10 +29,9 @@ public class DatabaseAccess {
             connectionProps.put("user", modelDbName);
             connectionProps.put("password", modelDbPassword);
             dbConnection = DriverManager.getConnection(url, connectionProps);
-            System.out.println("Connected yo");
 
         } catch (Exception e) {
-            System.out.println("Något gick fel dude");
+
             e.printStackTrace();
         }
 
@@ -47,14 +45,10 @@ public class DatabaseAccess {
         return statement.executeQuery();
     }
 
-    public ResultSet f_add_to_cart(String username, UUID productID) throws SQLException {
-        String query = "SELECT * FROM f_product_search(?,?);";
-
+    public ResultSet f_get_cart_for_user(String username) throws SQLException {
+        String query = "select * from f_get_cart_for_user(?)";
         PreparedStatement statement = getDbConnection().prepareStatement(query);
-
         statement.setString(1, username);
-        statement.setObject(2, productID);
-
         return statement.executeQuery();
     }
 
@@ -243,4 +237,20 @@ public class DatabaseAccess {
         }
         return success;
     }
+    public boolean p_user_remove_cart(UUID orderID) {
+        boolean success;
+        try {
+            String query = "CALL p_user_remove_cart(?)";
+            PreparedStatement statement = getDbConnection().prepareStatement(query);
+
+            statement.setObject(1, orderID);
+            statement.execute();
+            success = true;
+        } catch (SQLException e) {
+            success = false;
+        }
+        return success;
+    }
+
+
 }

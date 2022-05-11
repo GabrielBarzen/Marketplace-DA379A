@@ -1,5 +1,8 @@
 package com.life.marketplace.BusinessLogicLayer;
 
+import com.life.marketplace.model.Cart;
+import com.life.marketplace.model.Order;
+import com.life.marketplace.model.Orders;
 import com.life.marketplace.model.Product;
 
 import java.sql.ResultSet;
@@ -29,5 +32,28 @@ public class ObjectCreator {
         }
 
         return products;
+    }
+
+    public Cart createCartList(ResultSet rs) throws SQLException {
+
+
+        Cart cart = new Cart();
+        while(rs.next()) {
+
+            cart.setId(rs.getString(1));
+            cart.setDate(rs.getDate(3));
+            cart.setStatus(rs.getString(4));
+            cart.setProduct(rs.getString(5));
+            cart.setPrice(rs.getDouble(7));
+            cart.setDateOfMake(rs.getDate(8));
+            cart.setType(rs.getString(9));
+            cart.setColor(rs.getString(10));
+            cart.setCondition(rs.getString(11));
+            cart.setProductStatus(rs.getString(12));
+            cart.setSeller(rs.getString(13));
+            cart.setName(rs.getString(14));
+
+        }
+        return cart;
     }
 }

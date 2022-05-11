@@ -19,7 +19,7 @@ public class MarketplaceController {
     @RequestMapping(value = "/products/buy", method = RequestMethod.GET)
     public void buyButtonPressed(@RequestParam String productID, @RequestParam String username) {
 
-        System.out.println("id = " + productID + " uname = " + username );
+
         ProductManagement pm = new ProductManagement();
         pm.addToCart(username, UUID.fromString(productID));
 

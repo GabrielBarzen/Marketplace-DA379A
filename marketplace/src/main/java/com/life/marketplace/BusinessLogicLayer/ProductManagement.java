@@ -19,23 +19,16 @@ public class ProductManagement {
     }
 
     public ArrayList<Product> getAllProducts() {
-
         ArrayList<Product> products = new ArrayList<>();
-
         try {
-
             products = ObjectCreator.createProductList(db.f_get_all_products());
-
         } catch (SQLException e) {
-            System.out.println("Nä du det ballade ur");
             e.printStackTrace();
         }
-
         return products;
     }
 
     public boolean addToCart(String username, UUID productID) {
-        System.out.println("running db function add to cart with id : " + productID + ", and username : " + username);
         return db.p_add_to_cart(username, productID);
     }
 
@@ -56,7 +49,7 @@ public class ProductManagement {
             products = ObjectCreator.createProductList(db.f_product_search(type, condition, maxPrice, minPrice));
 
         } catch (SQLException e) {
-            System.out.println("Nä du det ballade ur");
+            e.printStackTrace();
             e.printStackTrace();
         }
 
@@ -77,7 +70,7 @@ public class ProductManagement {
 
             }
         } catch (SQLException e) {
-            System.out.println("något gick fel");
+            e.printStackTrace();
         }
         return types;
     }
@@ -96,7 +89,7 @@ public class ProductManagement {
 
             }
         } catch (SQLException e) {
-            System.out.println("något gick fel");
+            e.printStackTrace();
         }
         return colors;
     }
@@ -115,17 +108,25 @@ public class ProductManagement {
 
             }
         } catch (SQLException e) {
-            System.out.println("något gick fel");
+            e.printStackTrace();
         }
         return conditions;
     }
 
-    public static void main(String[] args) {
-        new ProductManagement();
+    public Cart getCartForUser(String username) {
+        Cart cart = new Cart();
+        ObjectCreator objectCreator = new ObjectCreator();
+        try {
+            ResultSet rs = db.f_get_cart_for_user(username);
+            cart = objectCreator.createCartList(rs);
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        }
+        return cart;
     }
-    public ProductManagement(){
-        System.out.println(getProductSellLists());
-    }
+
+
     
     public String getProductSellLists() {
         Gson gson = new Gson();
@@ -146,4 +147,15 @@ public class ProductManagement {
     public String getAllProductsJSON() {
         return new Gson().toJson(getAllProducts());
     }
+    public String getCartForUserJSON(String username){
+        return new Gson().toJson(getCartForUser(username));
+    }
+
+    public boolean userRemoveCart(String uuid) {
+            return db.p_user_remove_cart(UUID.fromString(uuid));
+        }
+    public boolean userConfirmCart(String uuid) {
+        return db.p_user_place_order(UUID.fromString(uuid));
+    }
+
 }

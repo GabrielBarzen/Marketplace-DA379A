@@ -46,7 +46,7 @@ public class UserManagement {
 
     public static void main(String[] args) {
         UserManagement userManagement = new UserManagement();
-        System.out.println(userManagement.loginUser("Nicholas", "INeedACane"));
+
     }
 
     public boolean updateReadStatus(String username) {
