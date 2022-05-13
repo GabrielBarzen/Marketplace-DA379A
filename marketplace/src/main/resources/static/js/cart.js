@@ -8,12 +8,11 @@ $(document).ready(function(){
 });
 
 function updateCart() {
-
     $.ajax({url: "/cart/show?username="+localStorage.getItem("username"), success: function(result) {
             console.log(JSON.parse(result));
             let cart = JSON.parse(result);
             console.log(cart);
-            if (cart.id != undefined) {
+            if (cart.id !== undefined) {
                 listCart(cart);
             }
         }});
