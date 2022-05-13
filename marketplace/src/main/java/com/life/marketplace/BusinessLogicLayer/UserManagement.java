@@ -30,7 +30,7 @@ public class UserManagement {
         return success;
     }
 
-    public boolean registerUser(String username, String email, String password, Date birthdate, String firstname, String lastname) {
+    public boolean registerUser(String username, String password, String email, Date birthdate, String firstname, String lastname) {
         boolean success = false;
         ResultSet rs;
         try {
