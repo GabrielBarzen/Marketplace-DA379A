@@ -39,5 +39,9 @@ public class StaticController {
     public String getSell() {
         return "sell.html";
     }
+    @RequestMapping("/order-history")
+    public String getOrderHistory() {
+        return "order_history.html";
+    }
 
 }
