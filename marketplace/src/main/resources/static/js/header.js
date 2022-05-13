@@ -16,11 +16,13 @@ function changeLoggedInLabel() {
         $("#cart-link").show();
         $("#offers-link").show();
         $("#sell-link").show();
+        $("#register-link").hide();
 
     } else {
         $("#cart-link").hide();
         $("#offers-link").hide();
         $("#sell-link").hide();
+        $("#register-link").show();
     }
 }
 
