@@ -113,17 +113,17 @@ public class ProductManagement {
         return conditions;
     }
 
-    public Cart getCartForUser(String username) {
-        Cart cart = new Cart();
+    public OrderAndProduct getCartForUser(String username) {
+        OrderAndProduct orderAndProduct = new OrderAndProduct();
         ObjectCreator objectCreator = new ObjectCreator();
         try {
             ResultSet rs = db.f_get_cart_for_user(username);
-            cart = objectCreator.createCartList(rs);
+            orderAndProduct = objectCreator.createCartList(rs);
         } catch (SQLException e) {
             e.printStackTrace();
 
         }
-        return cart;
+        return orderAndProduct;
     }
 
 
@@ -158,4 +158,16 @@ public class ProductManagement {
         return db.p_user_place_order(UUID.fromString(uuid));
     }
 
+    public String showPurchaseHistory(String username, Date startDate, Date stopDate) {
+        OrderAndProduct orderAndProduct = new OrderAndProduct();
+        ArrayList<OrderAndProduct> ordersAndProducts = new ArrayList<>();
+        try {
+            ResultSet rs = db.f_show_purchase_history(username,startDate,stopDate);
+            ObjectCreator oc = new ObjectCreator();
+            ordersAndProducts = oc.createPurchaseHistoryList(rs);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return new Gson().toJson(ordersAndProducts);
+    }
 }

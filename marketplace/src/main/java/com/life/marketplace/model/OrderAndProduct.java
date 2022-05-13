@@ -2,7 +2,7 @@ package com.life.marketplace.model;
 
 import java.sql.Date;
 
-public class Cart {
+public class OrderAndProduct {
     private String id;
     private java.sql.Date date;
     private String status;
