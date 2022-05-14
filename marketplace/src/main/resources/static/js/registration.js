@@ -11,12 +11,12 @@ let lastName
 
 function registerButtonPressed() {
 
-    let usernameInput = document.getElementById('usernameInput').value;
-    let passwordInput = document.getElementById('passwordInput').value;
-    let emailInput = document.getElementById('emailInput').value;
-    let birthDateInput = document.getElementById('birthDateInput').value;
-    let firstNameInput = document.getElementById('firstNameInput').value;
-    let lastNameInput = document.getElementById('lastNameInput').value;
+    let usernameInput   = document.getElementById('usernameInput').value;
+    let passwordInput   = document.getElementById('passwordInput').value;
+    let emailInput      = document.getElementById('emailInput').value;
+    let birthDateInput  = document.getElementById('birthDateInput').value;
+    let firstNameInput  = document.getElementById('firstNameInput').value;
+    let lastNameInput   = document.getElementById('lastNameInput').value;
 
     registerAccount(usernameInput, 
                     passwordInput,
@@ -52,11 +52,11 @@ function registerAccount(usernameInput,
 }
 
 function loginSuccess() {
-    alert("DU ÄR NU REGGAD DITT SVIN")
+    alert("Successfully logged in")
     window.location.assign("/login.html");
 }
 
 function loginError() {
-    alert('kunde inte skapa ett konto ::PPpPPPPppPPpp')
+    alert('Could not login')
     window.location.assign("/registration.html");
 }

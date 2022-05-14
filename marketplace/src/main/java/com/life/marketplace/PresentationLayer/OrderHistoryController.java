@@ -25,7 +25,7 @@ public class OrderHistoryController {
             @RequestParam long endDate ){
 
 
-        System.out.println("Searchign for uname : " + username + " with start time : " + beginDate + " and end time : " + endDate);
+        System.out.println("Searching for uname : " + username + " with start time : " + beginDate + " and end time : " + endDate);
         String startDateString = "1970-01-01";
         Date startDate = null;
         Date stopDate = null;

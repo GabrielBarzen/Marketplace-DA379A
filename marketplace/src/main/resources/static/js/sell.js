@@ -23,14 +23,14 @@ function submitButton() {
             "&color=" + color +
             "&condition=" + condition,
         success: function(){
-            window.location = "marketplace"
+            window.location.assign("/marketplace.html");
         }
 
     });
 }
 
 function cancelButton() {
-    window.location = "/marketplace.js";
+    window.location.assign("/marketplace.html");
 }
 
 
