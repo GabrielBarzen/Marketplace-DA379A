@@ -6,9 +6,39 @@ $(document).ready(function(){
     getPorperties();
 });
 
+function submitButton() {
+    let productName = document.getElementById("productNameInput").value;
+    let price = document.getElementById("priceInput").value;
+    let dateOfMakeInput = document.getElementById("dateOfMakeInput").value;
+    let dateOfMake = new Date(dateOfMakeInput);
+    let type = document.getElementById("typeInput").value;
+    let color = document.getElementById("colorInput").value;
+    let condition = document.getElementById("conditionInput").value;
+    $.ajax({url: "/sell/product?" +
+            "seller=" + username +
+            "&name=" + productName +
+            "&price=" + price +
+            "&dateOfMake=" + dateOfMake.getTime() +
+            "&type=" + type +
+            "&color=" + color +
+            "&condition=" + condition,
+        success: function(){
+            window.location = "marketplace"
+        }
+
+    });
+}
+
+function cancelButton() {
+    window.location = "/marketplace.js";
+}
+
+
+
+
 function getPorperties() {
     $.ajax({url: "/sell/itemList", success: function(result){
-//            console.log(JSON.parse(result));
+
             var json = JSON.parse(result);
 
             console.log(json.conditions[4]);
