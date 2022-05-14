@@ -170,4 +170,8 @@ public class ProductManagement {
         }
         return new Gson().toJson(ordersAndProducts);
     }
+
+    public boolean sellProduct(String seller, String productName, double price, Date date, String type, String color, String condition) {
+        return db.p_add_product(price,date,type,color,condition,seller,productName);
+    }
 }
