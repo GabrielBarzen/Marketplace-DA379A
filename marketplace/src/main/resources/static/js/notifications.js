@@ -61,3 +61,15 @@ function parseListTypes(types) {
         document.getElementById('typeInput').appendChild(option);
     }
 }
+function submitButton() {
+    let type = document.getElementById("typeInput").value;
+    $.ajax({url: "/subscription/add?" +
+            "username=" + username +
+            "&type=" + type,
+        method:"POST",
+        success: function(){
+            window.location = "marketplace"
+        }
+
+    });
+}
