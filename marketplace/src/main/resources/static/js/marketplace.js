@@ -10,7 +10,8 @@ let currentProducts = [];
 let numProducts = 0;
 
 function refreshProducts() {
-    $.ajax({url: url + "/products", success: function(result){
+    $.ajax({url: url + "/products",
+            success: function(result){
             let unparsedJson = result;
             numProducts = 0;
             const jsonObject = JSON.parse(unparsedJson);
@@ -20,7 +21,11 @@ function refreshProducts() {
                 addProductToProductTable(jsonObject[i]);
                 console.log(jsonObject[i])
             }
-        }});
+        },
+            error: function () {
+                window.alert("Cannot buy own product");
+            }
+    });
 }
 
 function addProductToProductTable(jsonObject) {
@@ -56,5 +61,8 @@ function addItemToCart(productIDX) {
     console.log("buying : " + currentProducts[productIDX].id);
     let currentUUIDToBuy = currentProducts[productIDX].id;
     $.ajax({url: "/products/buy?productID=" + currentUUIDToBuy + "&username="+localStorage.getItem("username"), success: function(result){
+        },
+        error: function () {
+            window.alert("Could not buy own product");
         }});
 }

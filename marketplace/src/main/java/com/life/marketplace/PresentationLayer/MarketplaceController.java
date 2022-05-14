@@ -1,6 +1,8 @@
 package com.life.marketplace.PresentationLayer;
 
 import com.life.marketplace.BusinessLogicLayer.ProductManagement;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
@@ -17,13 +19,19 @@ public class MarketplaceController {
     }
 
     @RequestMapping(value = "/products/buy", method = RequestMethod.GET)
-    public void buyButtonPressed(@RequestParam String productID, @RequestParam String username) {
+    public ResponseEntity<String> buyButtonPressed(@RequestParam String productID, @RequestParam String username) {
 
 
         ProductManagement pm = new ProductManagement();
-        pm.addToCart(username, UUID.fromString(productID));
+        boolean success = pm.addToCart(username, UUID.fromString(productID));
 
-
+        ResponseEntity<String> response;
+        if (success) {
+            response = new ResponseEntity<>("Product added to cart", HttpStatus.OK);
+        } else {
+            response = new ResponseEntity<>("Tried to buy own product", HttpStatus.UNAUTHORIZED);
+        }
+        return response;
     }
 
 }
