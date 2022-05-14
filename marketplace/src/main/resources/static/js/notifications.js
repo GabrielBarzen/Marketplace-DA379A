@@ -4,7 +4,6 @@ $(document).ready(function(){
     $("#header").load("header.html");
     username = localStorage.getItem("username");
     showNotifications();
-    console.log('lollll')
 });
 
 
@@ -17,7 +16,6 @@ function showNotifications() {
             numProducts = 0;
             const jsonObject = JSON.parse(unparsedJson);
 
-            console.log(jsonObject)
             currentOffersInTable = jsonObject;
             for (let i = 0; i < jsonObject.length; i++) {
                 addNotificationToTable(jsonObject[i]);
@@ -39,30 +37,5 @@ function addNotificationToTable(jsonObject) {
         htmlToAdd += "<td>"+notificationColumns[i]+"</td>"
     }
 
-    // htmlToAdd +="<td><input type=\"button\" value=\"Accept offer\" onclick =\" + acceptOffer(" + products + ")\"></td>"
-    // htmlToAdd +="<td><input type=\"button\" value=\"Decline offer\" onclick =\" + declineOffer(" + products++ + ")\"></td>"
-    // htmlToAdd += "</tr>" + "</tbody>";
-
-
     notificationsTable.innerHTML += htmlToAdd;
 }
-
-// function acceptOffer(productIDX) {
-//     var offerUUIDToAccept = currentOffersInTable[productIDX].orderID;
-
-//     $.ajax({url: "/offers/accept?orderid=" + offerUUIDToAccept, 
-//             method: "PUT"
-//         });
-
-//     window.location.reload()
-// }
-
-// function declineOffer(productIDX) {
-//     var offerUUIDToDecline = currentOffersInTable[productIDX].orderID;
-
-//     $.ajax({url: "/offers/decline?orderid=" + offerUUIDToDecline, 
-//             method: "PUT"
-//         });
-
-//     window.location.reload()
-// }
