@@ -4,6 +4,7 @@ $(document).ready(function(){
     $("#header").load("header.html");
     username = localStorage.getItem("username");
     showNotifications();
+    getPorperties();
 });
 
 
@@ -38,4 +39,25 @@ function addNotificationToTable(jsonObject) {
     }
 
     notificationsTable.innerHTML += htmlToAdd;
+}
+
+function getPorperties() {
+    $.ajax({url: "/notifications/itemList", success: function(result){
+//            console.log(JSON.parse(result));
+            var json = JSON.parse(result);
+
+            parseListTypes(json.types);
+
+            console.log(json.types)
+
+        }});
+}
+
+function parseListTypes(types) {
+    for (var i = 0; i < types.length; i++){
+        var option = document.createElement('option');
+        option.value = types[i];
+        option.innerHTML = types[i];
+        document.getElementById('typeInput').appendChild(option);
+    }
 }
