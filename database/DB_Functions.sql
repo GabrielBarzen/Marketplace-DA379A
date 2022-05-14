@@ -166,3 +166,27 @@ create or replace procedure p_update_read_status(f_username varchar) as
     $$
 
     language plpgsql;
+
+
+    CREATE OR REPLACE FUNCTION f_get_offers(f_uname VARCHAR)
+    RETURNS TABLE ("Order ID" UUID,
+                   "Product ID" UUID,
+                   "Product Name" VARCHAR,
+                   Price DOUBLE PRECISION,
+                   Status VARCHAR,
+                   Buyer VARCHAR,
+                   Seller VARCHAR)
+    AS $$
+        BEGIN
+            RETURN QUERY SELECT orders.id AS "Order ID",
+                                products.id AS "Product ID",
+                                products.name AS "Product name",
+                                products.price AS Price,
+                                orders.status AS "Status",
+                                orders."user" AS Buyer,
+                                products.seller AS Seller
+            FROM orders, products
+            WHERE orders.status = 'Pending' AND orders.product = products.id AND f_uname = products.seller;
+        END;
+    $$
+    LANGUAGE plpgsql;
