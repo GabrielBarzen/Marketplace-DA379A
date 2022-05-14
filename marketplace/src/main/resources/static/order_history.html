@@ -12,7 +12,15 @@
     <div id="header"></div>
 
     <h1>Order history</h1>
-    <table id="products">
+
+    <label for="startDateInput">Start date </label>
+    <input type="date" id="startDateInput" name="startDate">
+    <label for="endDateInput">End date </label>
+    <input type="date" id="endDateInput" name="endDate">
+    <label for="searchButton">End date </label>
+    <input type="button" id="searchButton" name="search" value="Search" onclick="searchByDateButton()">
+
+    <table id="orderProductsTable">
         <thead>
         <th>Order ID</th>
         <th>Product Name</th>
@@ -26,8 +34,6 @@
         <th>Condition</th>
         <th>Product status</th>
         <th>Seller</th>
-        <th>Remove from cart</th>
-        <th>Buy Product</th>
         </table>
     </thead>
     </body>

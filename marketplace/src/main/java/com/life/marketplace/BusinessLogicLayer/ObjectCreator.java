@@ -1,6 +1,8 @@
 package com.life.marketplace.BusinessLogicLayer;
 
 import com.life.marketplace.model.*;
+import com.life.marketplace.model.OrderAndProduct;
+import com.life.marketplace.model.Product;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -48,6 +50,52 @@ public class ObjectCreator {
         }
 
         return cart;
+   } 
+  
+  
+    public OrderAndProduct createCartList(ResultSet rs) throws SQLException {
+
+
+        OrderAndProduct orderAndProduct = new OrderAndProduct();
+        while(rs.next()) {
+
+            orderAndProduct.setId(rs.getString(1));
+            orderAndProduct.setDate(rs.getDate(3));
+            orderAndProduct.setStatus(rs.getString(4));
+            orderAndProduct.setProduct(rs.getString(5));
+            orderAndProduct.setPrice(rs.getDouble(7));
+            orderAndProduct.setDateOfMake(rs.getDate(8));
+            orderAndProduct.setType(rs.getString(9));
+            orderAndProduct.setColor(rs.getString(10));
+            orderAndProduct.setCondition(rs.getString(11));
+            orderAndProduct.setProductStatus(rs.getString(12));
+            orderAndProduct.setSeller(rs.getString(13));
+            orderAndProduct.setName(rs.getString(14));
+
+        }
+        return orderAndProduct;
+    }
+
+    public ArrayList<OrderAndProduct> createPurchaseHistoryList(ResultSet rs) throws SQLException {
+        ArrayList<OrderAndProduct> ordersAndProducts = new ArrayList<>();
+        while(rs.next()) {
+            System.out.println(rs.toString());
+            OrderAndProduct orderAndProduct = new OrderAndProduct();
+            orderAndProduct.setDate(rs.getDate(2));
+            orderAndProduct.setId(rs.getString(3));
+            orderAndProduct.setProduct(rs.getString(4));
+            orderAndProduct.setName(rs.getString(5));
+            orderAndProduct.setPrice(rs.getDouble(6));
+            orderAndProduct.setDateOfMake(rs.getDate(7));
+            orderAndProduct.setType(rs.getString(8));
+            orderAndProduct.setColor(rs.getString(9));
+            orderAndProduct.setCondition(rs.getString(10));
+            orderAndProduct.setProductStatus(rs.getString(11));
+            orderAndProduct.setSeller(rs.getString(12));
+            orderAndProduct.setStatus(rs.getString(13));
+            ordersAndProducts.add(orderAndProduct);
+        }
+        return ordersAndProducts;
     }
 
     public ArrayList<Offer> createOfferList(ResultSet rs) throws SQLException {
