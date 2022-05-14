@@ -1,6 +1,9 @@
 package com.life.marketplace.BusinessLogicLayer;
 
+import com.google.gson.Gson;
 import com.life.marketplace.DataAccessLayer.DatabaseAccess;
+import com.life.marketplace.model.Notification;
+import com.life.marketplace.model.Offer;
 import com.life.marketplace.model.Product;
 
 import java.sql.Date;
@@ -75,5 +78,31 @@ public class UserManagement {
     }
 
 
+    private ArrayList<Notification> getNotifications(String username) {
+        ArrayList<Notification> notifications = new ArrayList<>();
+        ResultSet rs;
+
+        try {
+            rs = db.f_get_notifications(username);
+
+            while (rs.next()) {
+                Notification notification = new Notification();
+                notification.setDate(Date.valueOf(rs.getString(1)));
+                notification.setNotificationMessage(rs.getString(2));
+
+                notifications.add(notification);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return notifications;
+    }
+
+    public String getNotificationsJSON(String username) {
+        ArrayList<Notification> notifications = getNotifications(username);
+        return new Gson().toJson(notifications);
+    }
 
 }
