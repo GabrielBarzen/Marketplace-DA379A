@@ -1,10 +1,6 @@
 package com.life.marketplace.BusinessLogicLayer;
 
-import com.life.marketplace.model.Cart;
-import com.life.marketplace.model.Order;
-import com.life.marketplace.model.Orders;
-import com.life.marketplace.model.Product;
-
+import com.life.marketplace.model.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -17,7 +13,6 @@ public class ObjectCreator {
 
         while (rs.next()) {
             Product product = new Product();
-
             product.setId       (rs.getString(1));
             product.setPrice    (rs.getDouble(2));
             product.setDate     (rs.getDate  (3));
@@ -35,11 +30,9 @@ public class ObjectCreator {
     }
 
     public Cart createCartList(ResultSet rs) throws SQLException {
-
-
         Cart cart = new Cart();
-        while(rs.next()) {
 
+        while(rs.next()) {
             cart.setId(rs.getString(1));
             cart.setDate(rs.getDate(3));
             cart.setStatus(rs.getString(4));
@@ -52,8 +45,27 @@ public class ObjectCreator {
             cart.setProductStatus(rs.getString(12));
             cart.setSeller(rs.getString(13));
             cart.setName(rs.getString(14));
-
         }
+
         return cart;
+    }
+
+    public ArrayList<Offer> createOfferList(ResultSet rs) throws SQLException {
+        ArrayList<Offer> offers = new ArrayList<>();
+        Offer offer;
+
+        while (rs.next()) {
+            offer = new Offer();
+            offer.setOrderID(rs.getString(1));
+            offer.setProductID(rs.getString(2));
+            offer.setProductName(rs.getString(3));
+            offer.setPrice(rs.getDouble(4));
+            offer.setStatus(rs.getString(5));
+            offer.setBuyerUsername(rs.getString(6));
+
+            offers.add(offer);
+        }
+
+        return offers;
     }
 }

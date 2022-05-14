@@ -127,6 +127,15 @@ public class DatabaseAccess {
 
         return statement.executeQuery();
     }
+
+    public ResultSet f_get_offers(String username) throws SQLException {
+        String query = "SELECT * FROM f_get_offers(?);";
+
+        PreparedStatement statement = getDbConnection().prepareStatement(query);
+        statement.setString(1, username);
+
+        return statement.executeQuery();
+    }
     
     /***********************************
      * PROCEDURES BELOW
@@ -252,5 +261,33 @@ public class DatabaseAccess {
         return success;
     }
 
+    public boolean p_confirm_order(UUID uuid) {
+        boolean success;
+        try {
+            String query = "CALL p_confirm_order(?)";
+            PreparedStatement statement = getDbConnection().prepareStatement(query);
 
+            statement.setObject(1, uuid);
+            statement.execute();
+            success = true;
+        } catch (SQLException e) {
+            success = false;
+        }
+        return success;
+    }
+
+    public boolean p_deny_order(UUID uuid) {
+        boolean success;
+        try {
+            String query = "CALL p_deny_order(?)";
+            PreparedStatement statement = getDbConnection().prepareStatement(query);
+
+            statement.setObject(1, uuid);
+            statement.execute();
+            success = true;
+        } catch (SQLException e) {
+            success = false;
+        }
+        return success;
+    }
 }
