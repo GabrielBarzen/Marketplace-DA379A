@@ -136,6 +136,19 @@ public class DatabaseAccess {
 
         return statement.executeQuery();
     }
+
+    public ResultSet f_get_notifications(String username) throws SQLException {
+
+        String query = "SELECT * FROM f_get_notifications(?);";
+
+        PreparedStatement statement = getDbConnection().prepareStatement(query);
+        statement.setString(1, username);
+
+        ResultSet rs = statement.executeQuery();
+        p_update_read_status(username);
+
+        return rs;
+    }
     
     /***********************************
      * PROCEDURES BELOW
@@ -207,7 +220,7 @@ public class DatabaseAccess {
     public boolean p_update_read_status(String username) {
         boolean success;
         try {
-            String query = "CALL p_remove_product(?)";
+            String query = "CALL p_update_read_status(?)";
             PreparedStatement statement = getDbConnection().prepareStatement(query);
             statement.setString(1,username);
             statement.execute();
