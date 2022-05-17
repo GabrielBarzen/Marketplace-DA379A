@@ -12,6 +12,17 @@
     <div id="header"></div>
     <h1>Marketplace</h1>
     <div>
+        <label for="typeInput">Type : </label>
+        <select id="typeInput" name="type"></select>
+        <label for="conditionInput">Condition : </label>
+        <select id="conditionInput" name="condition"></select>
+        <label for="priceMax">Price max: </label>
+        <input id="priceMax" name="priceMax" type="number"></input>
+        <label for="priceMin">Price min: </label>
+        <input id="priceMin" name="priceMin" type="number"></input>
+        <button id="filter" onclick="applyFilter()">Filter</button>
+    </div>
+    <div>
         <table id="products">
             <thead>
             <th>ID</th>

@@ -3,7 +3,7 @@ let username;
 $(document).ready(function(){
     $("#header").load("header.html");
     username = localStorage.getItem("username");
-    getPorperties();
+    getProperties();
 });
 
 function submitButton() {
@@ -36,7 +36,7 @@ function cancelButton() {
 
 
 
-function getPorperties() {
+function getProperties() {
     $.ajax({url: "/sell/itemList", success: function(result){
 
             var json = JSON.parse(result);

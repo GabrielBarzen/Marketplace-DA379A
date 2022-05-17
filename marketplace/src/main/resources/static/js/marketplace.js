@@ -4,10 +4,12 @@ let url = "http://localhost:8080";
 $(document).ready(function(){
     $("#header").load("header.html");
     refreshProducts();
+    getProperties();
 });
 
 let currentProducts = [];
 let numProducts = 0;
+let productObject;
 
 function refreshProducts() {
     $.ajax({url: url + "/products",
@@ -15,6 +17,7 @@ function refreshProducts() {
             let unparsedJson = result;
             numProducts = 0;
             const jsonObject = JSON.parse(unparsedJson);
+            productObject = jsonObject;
             console.log(jsonObject);
             currentProducts = jsonObject;
             for (let i = 0; i < jsonObject.length; i++) {
@@ -57,6 +60,54 @@ function addProductToProductTable(jsonObject) {
 
 }
 
+function getProperties() {
+    $.ajax({url: "/sell/itemList", success: function(result){
+
+            var json = JSON.parse(result);
+
+            console.log(json.conditions[4]);
+
+            parseListCondition(json.conditions);
+            parseListTypes(json.types);
+
+            console.log(json.conditions)
+            console.log(json.colors)
+            console.log(json.types)
+            document.getElementById("priceMax").value = 99999;
+            document.getElementById("priceMin").value = 0;
+
+        }});
+}
+
+function parseListCondition(conditions) {
+    for (var i = 0; i < conditions.length; i++){
+        var option = document.createElement('option');
+        option.value = conditions[i];
+        option.innerHTML = conditions[i];
+        document.getElementById('conditionInput').appendChild(option);
+    }
+    var option = document.createElement('option');
+    option.value = "None";
+    option.innerHTML = "None";
+    document.getElementById("conditionInput").appendChild(option)
+    document.getElementById("conditionInput").value = "None";
+}
+
+function parseListTypes(types) {
+    for (var i = 0; i < types.length; i++){
+        var option = document.createElement('option');
+        option.value = types[i];
+        option.innerHTML = types[i];
+        document.getElementById('typeInput').appendChild(option);
+
+    }
+    var option = document.createElement('option');
+    option.value = "None";
+    option.innerHTML = "None";
+    document.getElementById("typeInput").appendChild(option)
+    document.getElementById("typeInput").value = "None";
+}
+
 function addItemToCart(productIDX) {
     console.log("buying : " + currentProducts[productIDX].id);
     let currentUUIDToBuy = currentProducts[productIDX].id;
@@ -65,4 +116,24 @@ function addItemToCart(productIDX) {
         error: function () {
             window.alert("Could not buy own product");
         }});
+}
+
+function applyFilter() {
+
+    $("#products tbody tr").remove();
+    let chosenType = document.getElementById("typeInput").value;
+    let chosenCondition = document.getElementById("conditionInput").value;
+    let chosenPriceMax = document.getElementById("priceMax").value;
+    let chosenPriceMin = document.getElementById("priceMin").value;
+
+    for (let i = 0; i < productObject.length; i++) {
+        if(productObject[i].type === chosenType || chosenType === "None") {
+            if(productObject[i].condition === chosenCondition || chosenCondition === "None") {
+                if (productObject[i].price < chosenPriceMax && productObject[i].price > chosenPriceMin) {
+                    addProductToProductTable(productObject[i]);
+                    console.log(productObject[i])
+                }
+            }
+        }
+    }
 }

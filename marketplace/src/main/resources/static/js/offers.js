@@ -52,19 +52,27 @@ function addOfferToTable(jsonObject) {
 function acceptOffer(productIDX) {
     var offerUUIDToAccept = currentOffersInTable[productIDX].orderID;
 
-    $.ajax({url: "/offers/accept?orderid=" + offerUUIDToAccept, 
-            method: "PUT"
+    $.ajax({url: "/offers/accept?orderid=" + offerUUIDToAccept,
+            method: "PUT",
+            cache: false,
+            success: function (){
+                window.location.reload()
+            }
         });
 
-    window.location.reload()
+
 }
 
 function declineOffer(productIDX) {
     var offerUUIDToDecline = currentOffersInTable[productIDX].orderID;
 
-    $.ajax({url: "/offers/decline?orderid=" + offerUUIDToDecline, 
-            method: "PUT"
+    $.ajax({url: "/offers/decline?orderid=" + offerUUIDToDecline,
+            method: "PUT",
+            cache: false,
+            success: function (){
+                window.location.reload()
+            }
         });
 
-    window.location.reload()
+
 }
