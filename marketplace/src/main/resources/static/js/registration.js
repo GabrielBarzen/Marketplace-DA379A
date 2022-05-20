@@ -52,11 +52,11 @@ function registerAccount(usernameInput,
 }
 
 function loginSuccess() {
-    alert("Successfully logged in")
+    alert("Successfully registered")
     window.location.assign("/login.html");
 }
 
 function loginError() {
-    alert('Could not login')
+    alert('Could not register')
     window.location.assign("/registration.html");
 }

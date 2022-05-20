@@ -129,7 +129,7 @@ function applyFilter() {
     for (let i = 0; i < productObject.length; i++) {
         if(productObject[i].type === chosenType || chosenType === "None") {
             if(productObject[i].condition === chosenCondition || chosenCondition === "None") {
-                if (productObject[i].price < chosenPriceMax && productObject[i].price > chosenPriceMin) {
+                if (productObject[i].price <= chosenPriceMax && productObject[i].price >= chosenPriceMin) {
                     addProductToProductTable(productObject[i]);
                     console.log(productObject[i])
                 }

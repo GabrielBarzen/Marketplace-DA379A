@@ -22,11 +22,10 @@ function loginUser(usernameInput, passwordInput) {
 }
 
 function loginSuccess() {
-    console.log("fuck you" + username)
     localStorage.setItem("username", username);
     window.location.assign("/marketplace.html");
 }
 
 function loginError() {
-    console.log("fuck me")
+    alert('Could not login')
 }
